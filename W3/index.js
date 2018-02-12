@@ -41,8 +41,23 @@ function get_number_page(url, callback) {
        }
    });
  }
-
-
+ function get_url_page(url, callback) {
+      var urls_tab = [];
+      request(url, function (error, response, html) {
+          if (!error) {
+              const $ = cheerio.load(html);
+              $('a[class=poi-card-link]').each(function (i, elem) {
+                urls='https://restaurant.michelin.fr' + $(elem).attr('href')
+                urls_tab.push(urls);
+              }
+            );
+      if(callback) callback(urls_tab); 
+          }
+      });
+  }
+  
  
  get_number_page('https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin',console.log);
+ get_url_page('https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin');
+
    
