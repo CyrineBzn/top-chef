@@ -3,43 +3,33 @@ var fs      = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
-/*
-app.get('/scrape', function(req, res){
-  url = 'https://restaurant.michelin.fr/28u6ql7/le-jardin-des-remparts-beaune'
-  request(url, function(error, response, html){
-    if(!error){
-      var $ = cheerio.load(html);
-      var Name, Location;
-      var json = { Name : "", Location: ""};
-
-      $('.poi_intro-display-title').filter(function(){
-        var data = $(this);
-        Name = data.text().trim(); 
-        json.Name = Name;
-       
-      })
-    }
-    
-    fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-      console.log('File successfully written! - Check your project directory for the output.json file');
-    })
-    res.send('Check your console!')
-  })
-})
-
-app.listen('8081')
-console.log('Magic happens on port 8081');
-exports = module.exports = app;*/
 
 function get_number_page(url, callback) {
-  request(url, function (error, response, html) {
-       if (!error) {
-           var $ = cheerio.load(html);
-           var nbr = $('ul.pager').children('.last').prev().children().html();
-           callback(nbr);
-       }
-   });
- }
+
+    request(url, function (error, response, html) {
+      if (!error) {
+          var $ = cheerio.load(html);
+          var nbr = $('ul.pager').children('.last').prev().children().html();
+          callback(nbr);
+      }
+  });
+  }
+
+  function getTotalPageNbr() {
+    let totalPageNbr;
+    return new Promise((resolve, reject) => {
+        request(allRestaurantPage, (err, resp, body) => {
+            if (err) {
+                return reject(err);
+            }
+            const $ = cheerio.load(body);
+            totalPageNbr = $('.mr-pager-first-level-links > li').last().prev().text();
+            return resolve(totalPageNbr);
+
+        });
+    });
+}
+
  function get_url_page(url, callback) {
       var urls_tab = [];
       request(url, function (error, response, html) {
@@ -87,13 +77,15 @@ function get_infos_restaurent(url, callback){
 function write_json(url){
   var json = { "restaurants": [] };
   get_number_page(url, function (nbr) {
-  for (var i = 1; i < +nbr + 1; i++) {
+  for (var i = 1; i < 15; i++) {
     get_url_page(url + '/page-' + i.toString(), function (arr) {
       arr.forEach(function (elem) {
        get_infos_restaurent(elem, function (restaurant) {
         json.restaurants.push(restaurant);
-         fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-           console.log('Restaurent successfully written! - Check your project directory for the output.json file');
+         fs.writeFile('restaurants.json', JSON.stringify(json, null, 4), function(err){
+           console.log('Restaurant successfully written! You can check restaurants.json !');
+           console.log(json.restaurants.length+' restaurants are added ..');
+           console.log(' Start index.js when the scrapping ends .. ');
          });
        });
       });
@@ -101,6 +93,7 @@ function write_json(url){
    }
   });
 }
+
 
  //get_number_page('https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin');
  //get_url_page('https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin');
