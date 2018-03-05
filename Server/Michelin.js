@@ -77,7 +77,7 @@ function get_infos_restaurent(url, callback){
 function write_json(url){
   var json = { "restaurants": [] };
   get_number_page(url, function (nbr) {
-  for (var i = 1; i < 15; i++) {
+  for (var i = 1; i < +nbr +1; i++) {
     get_url_page(url + '/page-' + i.toString(), function (arr) {
       arr.forEach(function (elem) {
        get_infos_restaurent(elem, function (restaurant) {

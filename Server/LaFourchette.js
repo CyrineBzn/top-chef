@@ -110,7 +110,7 @@ function get(restaurant, response) {
     content = get_all_restaurants();
     if (content) {
         let result = content.find((rest) => {
-            return rest.mName == restaurant.name;
+            return rest.name == restaurant.name;
         });
         get_sales(result)
             .then((res) => response.send(res))

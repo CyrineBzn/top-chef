@@ -1,0 +1,16 @@
+.title{
+   
+    font-size: 200%;
+    color: brown;
+}
+.Welcome{
+    font-size: 300%;
+    font-weight: bold;
+    color: Navy ;
+}
+.Description{
+font-weight: bold;
+}
+.Copyright{
+    text-align: left;
+}

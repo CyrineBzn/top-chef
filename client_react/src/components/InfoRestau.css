@@ -1,0 +1,15 @@
+.card-title{
+color:DarkBlue ;
+font-weight: bold;
+}
+.card-chef{
+    font-weight: bold;
+}
+.infos{
+    font-weight: bold;  
+    text-decoration: underline;
+}
+.card-promo{
+    font-weight: bold;
+    color: brown;
+}
