@@ -8,24 +8,27 @@
 To use this application in a development mode, there are two parts of commands to do after opening a terminal in top-chef folder: 
 - On the server side: 
 
-    > cd server
-    > npm install experess
-    > npm install
-    > npm start
-	
+```sh
+    ❯ cd server
+    ❯ npm install experess
+    ❯ npm install
+    ❯ npm start
+```
 After doing this, a server will be running in localhost:3001
   
 - On the client side : 
-  > cd client_react
-  > npm install
-  > npm start
-  
+```sh
+  ❯ cd client_react
+  ❯ npm install
+  ❯ npm start
+ ```
  A browser will be opened with the application displaying the list of restaurants with their deals, Michelin's card and La Fourchette's card to allow you to book for your choice.
   
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+##Table of Contents  
 
 - [Introduction](#introduction)
 - [Objective - Workshop in 1 sentence](#objective---workshop-in-1-sentence)
